@@ -11664,6 +11664,7 @@ header.masthead {
 .portfolio-modal .modal-dialog {
     margin: 1rem;
     max-width: 100vw;
+    opacity: 0.9;
 }
 
 .portfolio-modal .modal-content {
