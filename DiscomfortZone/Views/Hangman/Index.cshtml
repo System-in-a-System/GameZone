@@ -1,3 +1,33 @@
-﻿<h1>Hangman Game</h1>
+﻿@{
+    ViewData["Title"] = "Hangman Game";
+}
+
+
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<!-- Bootstrap 4 CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="~/css/styles.css" rel="stylesheet" />
+<!-- Specific to Hangman CSS -->
+<link href="~/css/hangman.css" rel="stylesheet" />
+
+
+<title>Hangman</title>
+
+<div class="container">
+    <h1 class="text-center">Hangman</h1>
+    <div class="float-right">Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'></span></div>
+    <div class="text-center action-zone">
+        <img id="hangmanPic" src="./assets/hangman/man/0.jpg" alt="">
+        <div class="flex-row">
+            <p>Guess the country depicted by emojis:</p>
+            <p>🧐</p>
+        </div>
+        <p id="wordSpotlight">The word to be guessed goes here</p>
+        <div id="keyboard"></div>
+        <button class="btn btn-info reset-button" onClick="reset()">Reset</button>
+    </div>
+</div>
 
 <script src="~/js/hangman.js"></script>
