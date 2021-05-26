@@ -8,8 +8,17 @@
     height: 280px;
 }
 
+#emojiContainer {
+    font-size: 30px;
+}
+
+.task-line p {
+    font-size: 20px;
+}
+
 .letter-button {
     height: 45px;
+    margin: 0.5px;
 }
 
 .reset-button {

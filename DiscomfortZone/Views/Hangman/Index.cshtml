@@ -13,16 +13,13 @@
 <link href="~/css/hangman.css" rel="stylesheet" />
 
 
-<title>Hangman</title>
-
 <div class="container">
-    <h1 class="text-center">Hangman</h1>
     <div class="float-right">Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'></span></div>
     <div class="text-center action-zone">
         <img id="hangmanPic" src="./assets/hangman/man/0.jpg" alt="">
-        <div class="flex-row">
-            <p>Guess the country depicted by emojis:</p>
-            <p>🧐</p>
+        <div class="flex-row task-line">
+            <p>Guess the country:</p>
+            <p id="emojiContainer"></p>
         </div>
         <p id="wordSpotlight">The word to be guessed goes here</p>
         <div id="keyboard"></div>

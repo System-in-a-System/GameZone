@@ -16,6 +16,7 @@ var countries = [
 
 // Declare key variables
 let answer = '';
+let emojiLine = '';
 let maxWrong = 6;
 let mistakes = 0;
 let guessed = [];
@@ -25,6 +26,25 @@ let wordStatus = null;
 function randomWord() {
     answer = countries[Math.floor(Math.random() * countries.length)].toUpperCase();
 }
+
+// Generates emojis for giving a hint
+function generateEmojis() {
+    if (answer == "LIECHTENSTEIN") emojiLine = "👑🚲🔬";
+    if (answer == "BRAZIL") emojiLine = "⚽☕🎊👙";
+    if (answer == "INDONESIA") emojiLine = "🌋🌏👳";
+    if (answer == "ARGENTINA") emojiLine = "💃⚽🍵";
+    if (answer == "MOROCCO") emojiLine = "👑🍊🏄";
+    if (answer == "GERMANY") emojiLine = "🏭🚘🍺";
+    if (answer == "ECUADOR") emojiLine = "🍌☕🌋🐢";
+    if (answer == "AUSTRIA") emojiLine = "⛷️⛰️🎵🇪🇺";
+    if (answer == "SWITZERLAND") emojiLine = "🏦⌚🍫";
+    if (answer == "IRELAND") emojiLine = "☘️🥔🍺";
+    if (answer == "SOMALIA") emojiLine = "🔫🛥️🏴‍☠️🌍";
+    if (answer == "THAILAND") emojiLine = "🍍🐘👙";
+
+    document.getElementById("emojiContainer").textContent = emojiLine;
+}
+
 
 // Generate buttons and append them to the document
 function generateButtons() {
@@ -110,6 +130,7 @@ function reset() {
 
     // Generate key game composites
     randomWord();
+    generateEmojis();
     guessedWord();
     updateMistakes();
     generateButtons();
@@ -119,5 +140,6 @@ document.getElementById('maxWrong').innerHTML = maxWrong;
 
 // Generate key game composites
 randomWord();
+generateEmojis();
 generateButtons();
 guessedWord();
