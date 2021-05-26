@@ -1,7 +1,18 @@
-﻿.action-zone {
-    width: 50%;
-    margin-left: 25%;
-    margin-right: 50%;
+﻿.game-zone {
+    background-color: white;
+    border: 10px solid #333333;
+    width: 50vw;
+    height: 50vw;
+}
+
+.action-zone {
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+#hangmanArena {
+    
 }
 
 #hangmanPic {
@@ -12,17 +23,31 @@
     font-size: 30px;
 }
 
-.task-line p {
+.task-line {
     font-size: 20px;
+    border: 0.2px solid #9c9c9c;
+    box-shadow: grey 3px 3px;
+}
+
+#keyboard {
+    background-color: #565555;
+    border: 3px solid black;
+    box-shadow: grey 5px 5px inset;
 }
 
 .letter-button {
-    height: 45px;
+    height: 40px;
     margin: 0.5px;
 }
 
 .reset-button {
-    width: 200px;
+    width: 100%;
     height: 50px;
-    background-color: green;
+    background-color: #656464;
+    border: 3px solid black;
+    box-shadow: grey 5px 5px inset;
+}
+
+.reset-button:hover {
+    box-shadow: none;
 }

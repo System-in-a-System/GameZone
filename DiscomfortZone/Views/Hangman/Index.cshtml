@@ -13,17 +13,19 @@
 <link href="~/css/hangman.css" rel="stylesheet" />
 
 
-<div class="container">
+<div class="container game-zone">
     <div class="float-right">Wrong Guesses: <span id='mistakes'>0</span> of <span id='maxWrong'></span></div>
     <div class="text-center action-zone">
-        <img id="hangmanPic" src="./assets/hangman/man/0.jpg" alt="">
+        <div id="hangmanArena">
+            <img id="hangmanPic" src="./assets/hangman/man/0.jpg" alt="">
+        </div>
         <div class="flex-row task-line">
             <p>Guess the country:</p>
             <p id="emojiContainer"></p>
         </div>
         <p id="wordSpotlight">The word to be guessed goes here</p>
         <div id="keyboard"></div>
-        <button class="btn btn-info reset-button" onClick="reset()">Reset</button>
+        <button class="reset-button" onClick="reset()">Restart Execution</button>
     </div>
 </div>
 
