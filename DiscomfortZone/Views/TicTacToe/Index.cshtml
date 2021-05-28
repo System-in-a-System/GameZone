@@ -1,0 +1,39 @@
+﻿<style>
+    .game-container {
+        width: 480px;
+        height: 480px;
+        margin: 0 auto;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+        background-color: aqua;
+        border-radius: 40px;
+    }
+
+    .circle {
+        width: 150px;
+        height: 150px;
+        background: black;
+        margin: 5px;
+        font-size: 108px;
+        font-family: sans-serif;
+        text-align: center;
+        color: blue;
+        cursor: pointer;
+        float: left;
+        border-radius: 60px;
+    }
+</style>
+
+<div class="game-container">
+    <div class="circle" id="circle1" onclick="insert(this.id)"></div>
+    <div class="circle" id="circle2" onclick="insert(this.id)"></div>
+    <div class="circle" id="circle3" onclick="insert(this.id)"></div>
+    <div class="circle" id="circle4" onclick="insert(this.id)"></div>
+    <div class="circle" id="circle5" onclick="insert(this.id)"></div>
+    <div class="circle" id="circle6" onclick="insert(this.id)"></div>
+    <div class="circle" id="circle7" onclick="insert(this.id)"></div>
+    <div class="circle" id="circle8" onclick="insert(this.id)"></div>
+    <div class="circle" id="circle9" onclick="insert(this.id)"></div>
+</div>
+
+<script src="~/js/tictactoe.js"></script>
