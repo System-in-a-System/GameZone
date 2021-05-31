@@ -1,3 +1,53 @@
-﻿<h1>Puzzle Game</h1>
+﻿@{
+    ViewData["Title"] = "Picture puzzle game";
+}
 
-<script src="~/js/puzzle.js"></script>
+<link rel=" stylesheet" href="~/css/puzzle.css" />
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script defer src="~/js/puzzle.js"></script>
+
+<h1>Image Puzzle Game</h1>
+
+<div id="collage">
+
+    <hr />
+    <div id="playPanel">
+        <h2 id="imgTitle"></h2>
+        <hr />
+        <div style="display:inline-block; margin:auto; width:95%; vertical-align:top;">
+            <ul id="sortable" class="sortable"></ul>
+            <div id="actualImageBox">
+                <div id="stepBox">
+                    <div>Steps:</div>
+                    <div id="stepCount" class="stepCount">0</div>
+
+                </div>
+                <div id="timeBox">
+                    Time Taken: <span id="timerPanel"></span> secs
+                </div>
+                <img id="actualImage" />
+                <div>Rearrange to create a picture like this.</div>
+
+                <div>
+
+                    <button id="btnRule" type="button" class="btn" onclick="rulesButtons();">Rules</button>
+                    <button id="newPhoto" type="button" class="btn" onclick="restart();">next Photo</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="gameOver" style="display:none;">
+        <div style="background-color: #fc9e9e; padding: 5px 10px 20px 10px; text-align: center; ">
+            <h2 style="text-align:center">Game Over!!</h2>
+            Congratulations!! <br /> You have completed this picture.
+            <br /> Steps: <span id="stepCount" class="stepCount">0</span> steps.
+            <br /> Time Taken: <span class="timeCount">0</span> seconds<br />
+            <div>
+                <button type="button" onclick="window.location.reload(true);">Play Again</button>
+            </div>
+        </div>
+    </div>
+</div>
