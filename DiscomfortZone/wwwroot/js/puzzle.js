@@ -4,33 +4,32 @@ var images = [
     { src: './assets/img/puzzleGame/12.jpg', title: 'Pyramids' },
     { src: './assets/img/puzzleGame/13.jpg', title: 'Great Wall of China' },
     { src: './assets/img/puzzleGame/14.jpg', title: 'Leaning Tower of Pisa' },
-   
+
 ];
 
-
-
+var gridSize = 5;
 window.onload = function () {
-    var gridSize = document.querySelector('collage');
+    var grid = document.querySelector('#collage');
     imagePuzzle.startGame(images, gridSize);
 };
 
-// Create fanction to restart button
+// Create function to restart button
 function restart() {
-    var gridSize = document.querySelector('collage');
+    var grid = document.querySelector('#collage');
     imagePuzzle.startGame(images, gridSize);
 }
 
 //Add alert to rules button
 function rulesButtons() {
-   
+
     alert('Rearrange the image parts in a way that it correctly forms the picture. \nThe no. of steps taken will be counted.');
-    
+
 }
 
-
-
+// Declare timer variable
 var timerFunction;
 
+// Create The image puzzle
 var imagePuzzle = {
     stepCount: 0,
     startTime: new Date().getTime(),
@@ -49,7 +48,7 @@ var imagePuzzle = {
         timerFunction = setTimeout(imagePuzzle.tick, 1000);
     },
     setImage: function (images, gridSize) {
-        var percentage = 100 / (gridSize - 1);
+        var percentage = 100 / (gridSize - 1 );
         var image = images[Math.floor(Math.random() * images.length)];
         helper.doc('imgTitle').innerHTML = image.title;
         helper.doc('actualImage').setAttribute('src', image.src);
@@ -58,14 +57,15 @@ var imagePuzzle = {
             var xpos = (percentage * (i % gridSize)) + '%';
             var ypos = (percentage * Math.floor(i / gridSize)) + '%';
 
-            let li = document.createElement('li');
+           let li = document.createElement('li');
             li.id = i;
             li.setAttribute('data-value', i);
             li.style.backgroundImage = 'url(' + image.src + ')';
             li.style.backgroundSize = (gridSize * 100) + '%';
             li.style.backgroundPosition = xpos + ' ' + ypos;
-            li.style.width = 400 / gridSize + 'px';
-            li.style.height = 400 / gridSize + 'px';
+            li.style.width = (400 / gridSize )  -1 + 'px';
+            li.style.height = (400 / gridSize) - 25 + 'px';
+            li.style.border = '0.1px solid white';
 
             li.setAttribute('draggable', 'true');
             li.ondragstart = (event) => event.dataTransfer.setData('data', event.target.id);
@@ -77,15 +77,15 @@ var imagePuzzle = {
 
                 if (origin && dest && p) {
                     let temp = dest.nextSibling;
-                    let x_diff = origin.offsetLeft-dest.offsetLeft;
-                    let y_diff = origin.offsetTop-dest.offsetTop;
+                    let x_diff = origin.offsetLeft - dest.offsetLeft;
+                    let y_diff = origin.offsetTop - dest.offsetTop;
 
-                    if(y_diff == 0 && x_diff >0){
+                    if (y_diff == 0 && x_diff > 0) {
                         //LEFT SWAP
                         p.insertBefore(origin, dest);
                         p.insertBefore(temp, origin);
                     }
-                    else{
+                    else {
                         p.insertBefore(dest, origin);
                         p.insertBefore(origin, temp);
                     }
@@ -97,10 +97,10 @@ var imagePuzzle = {
                     document.querySelector('.timeCount').textContent = (parseInt((now - imagePuzzle.startTime) / 1000, 10));
 
                     if (isSorted(vals)) {
-                        // helper.doc('actualImageBox').style.display = 'none';
-                        // helper.doc('gameOver').style.display = 'block';
-                        helper.doc('actualImageBox').innerHTML = helper.doc('gameOver').innerHTML;
+                     
+                        helper.doc('actualImageBox').innerHTML = helper.doc('win').innerHTML;
                         helper.doc('stepCount').textContent = imagePuzzle.stepCount;
+                       
                     }
                 }
             };
@@ -111,11 +111,13 @@ var imagePuzzle = {
     }
 };
 
+// IF is sorted
 isSorted = (arr) => arr.every((elem, index) => { return elem == index; });
 
 var helper = {
     doc: (id) => document.getElementById(id) || document.createElement("div"),
 
+    // Shuffle funtion
     shuffle: (id) => {
         var ul = document.getElementById(id);
         for (var i = ul.children.length; i >= 0; i--) {
@@ -123,5 +125,8 @@ var helper = {
         }
     }
 
- 
+
+
+
 }
+
