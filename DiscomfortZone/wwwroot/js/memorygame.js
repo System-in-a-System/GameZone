@@ -35,7 +35,7 @@ function displayBricks(columns, rows) {
         image.setAttribute('src', './assets/memorygame/tiles/0.jpg')
         image.setAttribute('alt', `${i}`)
         image.setAttribute('tabindex', `${i + 1}`)
-        image.style.height = '154.6px'
+        image.style.height = '140px'
 
         board.appendChild(image)
 
