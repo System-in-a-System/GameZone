@@ -7,6 +7,16 @@ var images = [
 
 ];
 
+//load audio
+let info = new Audio();
+info.src = "./assets/puzzleSounds/rules.mp3";
+
+let win = new Audio();
+win.src = "./assets/puzzleSounds/win.mp3";
+
+let next = new Audio();
+next.src = "./assets/puzzleSounds/next.wav";
+
 var gridSize = 5;
 window.onload = function () {
     var grid = document.querySelector('#collage');
@@ -17,11 +27,12 @@ window.onload = function () {
 function restart() {
     var grid = document.querySelector('#collage');
     imagePuzzle.startGame(images, gridSize);
+    next.play();
 }
 
-//Add alert to rules button
+//Add alert and sound to rules button
 function rulesButtons() {
-
+    info.play();
     alert('Rearrange the image parts in a way that it correctly forms the picture. \nThe no. of steps taken will be counted.');
 
 }
@@ -97,10 +108,10 @@ var imagePuzzle = {
                     document.querySelector('.timeCount').textContent = (parseInt((now - imagePuzzle.startTime) / 1000, 10));
 
                     if (isSorted(vals)) {
-                     
+                        win.play();
                         helper.doc('actualImageBox').innerHTML = helper.doc('win').innerHTML;
                         helper.doc('stepCount').textContent = imagePuzzle.stepCount;
-                       
+                      
                     }
                 }
             };
