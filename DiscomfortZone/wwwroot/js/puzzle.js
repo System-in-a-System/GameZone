@@ -17,6 +17,11 @@ win.src = "./assets/puzzleSounds/win.mp3";
 let next = new Audio();
 next.src = "./assets/puzzleSounds/next.wav";
 
+let gameover = new Audio();
+gameover.src = "./assets/puzzleSounds/gameover.mp3";
+
+
+//Create grid function
 var gridSize = 5;
 window.onload = function () {
     var grid = document.querySelector('#collage');
@@ -106,13 +111,18 @@ var imagePuzzle = {
                     var now = new Date().getTime();
                     helper.doc('stepCount').textContent = ++imagePuzzle.stepCount;
                     document.querySelector('.timeCount').textContent = (parseInt((now - imagePuzzle.startTime) / 1000, 10));
+                    if (imagePuzzle.gameover) {
 
+                    }
                     if (isSorted(vals)) {
                         win.play();
+
                         helper.doc('actualImageBox').innerHTML = helper.doc('win').innerHTML;
                         helper.doc('stepCount').textContent = imagePuzzle.stepCount;
                       
                     }
+
+                
                 }
             };
             li.setAttribute('dragstart', 'true');
@@ -125,6 +135,15 @@ var imagePuzzle = {
 // IF is sorted
 isSorted = (arr) => arr.every((elem, index) => { return elem == index; });
 
+//Set a timer if timing is over
+
+Gameover = setTimeout(function () {      
+        clearInterval(imagePuzzle);   
+        gameover.play();
+        helper.doc('actualImageBox').innerHTML = helper.doc('gameover').innerHTML;
+    }, 40000);                     // time in miliseconds before the game ends(40 second)
+
+
 var helper = {
     doc: (id) => document.getElementById(id) || document.createElement("div"),
 
@@ -136,8 +155,4 @@ var helper = {
         }
     }
 
-
-
-
 }
-
