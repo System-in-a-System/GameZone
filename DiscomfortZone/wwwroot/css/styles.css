@@ -11886,6 +11886,7 @@ header.masthead {
 }
 
 @media (min-width: 1200px) {
+
     .timeline > li {
         min-height: 170px;
     }
@@ -12002,8 +12003,15 @@ section#contact {
 }
 
 .escape-reality-button {
-    width: 25vw;
-    height: 80px;
+    width: fit-content();
+    height: fit-content();
     font-size: 25px;
-    
+    padding: 30px;
 }
+
+@media screen and (max-width: 1300px) {
+    .footer {
+        display: none;
+    }
+}
+
