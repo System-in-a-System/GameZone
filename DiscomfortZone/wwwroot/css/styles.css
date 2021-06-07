@@ -12015,3 +12015,21 @@ section#contact {
     }
 }
 
+.mini-header {
+    padding-top: 10.5rem;
+    padding-bottom: 6rem;
+    text-align: center;
+    color: #fff;
+    background-image: url("../assets/logo.jpg");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    width: 120%;
+    margin-right: -10%;
+    margin-left: -10%;
+}
+
+#online-status {
+    color: lightyellow
+}
