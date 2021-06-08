@@ -109,7 +109,7 @@ function checkIfGameWon() {
 }
 
 function calculateHangmanScore() {
-    score = 12.5 * (maxWrong - mistakes);
+    score = 12 * (maxWrong - mistakes);
 }
 
 function updateHangmanScoreList() {
