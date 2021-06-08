@@ -116,7 +116,7 @@ function updateSnakeScoreList() {
     })
 
     // Reset updated top-players list to the the local storage
-    window.localStorage.setItem('memorygame-top-players', JSON.stringify(scoreStatistics))
+    window.localStorage.setItem('snake-top-players', JSON.stringify(scoreStatistics))
 }
 
 
