@@ -17,10 +17,14 @@ var countries = [
 // Declare key variables
 let answer = '';
 let emojiLine = '';
-let maxWrong = 6;
+let maxWrong = 8;
 let mistakes = 0;
 let guessed = [];
 let wordStatus = null;
+
+// Retrieve the nickname from local storage or set it to default
+let nickname = window.localStorage.getItem('loggedin') || 'Unknown Hero'
+let score = 0;
 
 // Picks out a random word out of the countries wordlist and assigns it to "answer" variable
 function randomWord() {
@@ -46,7 +50,7 @@ function generateEmojis() {
 }
 
 
-// Generate buttons and append them to the document
+// Generates buttons, assigns event handler to each and appends the virtual keyboard to the document
 function generateButtons() {
     let buttonsHTML = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(letter =>
         `
@@ -99,10 +103,52 @@ function updateHangmanPicture() {
 function checkIfGameWon() {
     if (wordStatus === answer) {
         document.getElementById('keyboard').innerHTML = 'You saved the man!!!';
+        calculateHangmanScore();
+        updateHangmanScoreList();
     }
 }
 
-// Checks if the number of failed guesses reached maximum possible numbwer (8)
+function calculateHangmanScore() {
+    score = 12.5 * (maxWrong - mistakes);
+}
+
+function updateHangmanScoreList() {
+    // Save current user score
+    const currentNicknameScorePair = { name: nickname, score: score };
+
+    // Check if current user score qualifies for the list of 10 top-players
+    const scoreStatistics = JSON.parse(window.localStorage.getItem('hangman-top-players')) || [];
+
+    if (scoreStatistics.length >= 10) {
+        for (let i = 0; i < scoreStatistics.length; i++) {
+            if (score > scoreStatistics[i].score) {
+                scoreStatistics[i] = currentNicknameScorePair;
+                break;
+            }
+        }
+    } else {
+        scoreStatistics.push(currentNicknameScorePair);
+    }
+
+    // Sort the top-player list in descending order
+    scoreStatistics.sort((a, b) => {
+        const current = a.score
+        const next = b.score
+
+        let comparison = 0
+        if (current > next) {
+            comparison = -1
+        } else if (current < next) {
+            comparison = 1
+        }
+        return comparison
+    })
+
+    // Reset updated top-players list to the the local storage
+    window.localStorage.setItem('hangman-top-players', JSON.stringify(scoreStatistics))     
+}
+
+// Checks if the number of failed guesses reached maximum possible numbwer (6)
 function checkIfGameLost() {
     if (mistakes === maxWrong) {
         document.getElementById('wordSpotlight').innerHTML = 'The answer was: ' + answer;
