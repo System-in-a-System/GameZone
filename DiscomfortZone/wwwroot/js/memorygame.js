@@ -23,7 +23,7 @@ let currentTimer = ''
 let score = 0
 
 // Retrieve the nickname from local storage or set it to default
-let nickname = window.localStorage.getItem('nickname') || 'Unknown Entity'
+let nickname = window.localStorage.getItem('loggedin') || 'Unknown Hero'
 
 displayBricks(4, 4)
 setTimer()
@@ -217,38 +217,65 @@ function finishTheGame() {
 
     // Announce the end of the game
     const gameIsOverAnnouncement = document.createElement('div')
-    gameIsOverAnnouncement.textContent = 'All pairs are matched!'
+    gameIsOverAnnouncement.textContent = 'Pairs were matched!'
     gameIsOverAnnouncement.style.marginTop = '5px'
     gameIsOverAnnouncement.style.marginBottom = '2px'
-    gameIsOverAnnouncement.style.marginLeft = '50px'
+    gameIsOverAnnouncement.style.marginLeft = '30%'
+    gameIsOverAnnouncement.style.marginRight = '30%'
     board.appendChild(gameIsOverAnnouncement)
 
     // Calculate & Output score
     calculateScore()
+    updateMemoryGameScoreList()
+
     const scoreAnnouncement = document.createElement('div')
-    scoreAnnouncement.textContent = `Your score is ${score}!`
+    scoreAnnouncement.textContent = `Your score is ${score}`
     scoreAnnouncement.style.marginBottom = '2px'
-    scoreAnnouncement.style.marginLeft = '55px'
+    scoreAnnouncement.style.marginLeft = '33%'
+    scoreAnnouncement.style.marginRight = '33%'
     board.appendChild(scoreAnnouncement)
-
-    // Provide the button to restart the game
-    const restartButton = document.createElement('button')
-    restartButton.textContent = 'Play again'
-    restartButton.style.marginLeft = '55px'
-    restartButton.style.backgroundColor = 'rgb(150, 187, 235)'
-    board.appendChild(restartButton)
-
-    restartButton.addEventListener('click', e => {
-        console.log("something")
-        restartButton.remove()
-        restartTheGame() 
-    })
 }
 
 
 // Calculates score based on the number of clicks used during the game
 function calculateScore() {
     score = Math.floor(32 / numberOfClicks * 100)
+}
+
+function updateMemoryGameScoreList() {
+    // Save current user score
+    const currentNicknameScorePair = { name: nickname, score: score };
+
+    // Check if current user score qualifies for the list of 10 top-players
+    const scoreStatistics = JSON.parse(window.localStorage.getItem('memorygame-top-players')) || [];
+
+    if (scoreStatistics.length >= 10) {
+        for (let i = 0; i < scoreStatistics.length; i++) {
+            if (score > scoreStatistics[i].score) {
+                scoreStatistics[i] = currentNicknameScorePair;
+                break;
+            }
+        }
+    } else {
+        scoreStatistics.push(currentNicknameScorePair);
+    }
+
+    // Sort the top-player list in descending order
+    scoreStatistics.sort((a, b) => {
+        const current = a.score
+        const next = b.score
+
+        let comparison = 0
+        if (current > next) {
+            comparison = -1
+        } else if (current < next) {
+            comparison = 1
+        }
+        return comparison
+    })
+
+    // Reset updated top-players list to the the local storage
+    window.localStorage.setItem('memorygame-top-players', JSON.stringify(scoreStatistics))
 }
 
 function restartTheGame() {
