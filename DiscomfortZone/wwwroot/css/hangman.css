@@ -2,7 +2,8 @@
     background-color: white;
     border: 10px solid #333333;
     width: 50vw;
-    height: 50vw;
+    height: fit-content();
+    padding: 5px;
 }
 
 .action-zone {
@@ -50,4 +51,13 @@
 
 .reset-button:hover {
     box-shadow: none;
+}
+
+@media screen and (max-width: 1200px) {
+    .game-zone {
+        width: 100%;
+        height: fit-content();
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 }
