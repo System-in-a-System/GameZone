@@ -52,6 +52,17 @@ function displayScoreList() {
 
 
     // Compile a table
+    lightsoutZone.appendChild(scoreTableTemplate.content.cloneNode(true))
+    const scoreTableLightsout = lightsoutZone.querySelector('#score-table')
+    scoreTableLightsout.id = 'lightsout-score-table'
+
+    // Load top-players into a score-table
+    for (let i = 0; i < retrievedTopListLightsout.length; i++) {
+        scoreTableLightsout.innerHTML += '<tr><td>' + retrievedTopListLightsout[i].name + '</td><td>' + retrievedTopListLightsout[i].score + '</td></tr>'
+    }
+
+
+    // Compile a table
     memorygameZone.appendChild(scoreTableTemplate.content.cloneNode(true))
     const scoreTableMemorygame = memorygameZone.querySelector('#score-table')
     scoreTableMemorygame.id = 'memorygame-score-table'
