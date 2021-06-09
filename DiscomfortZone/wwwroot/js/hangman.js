@@ -17,7 +17,7 @@ var countries = [
 // Declare key variables
 let answer = '';
 let emojiLine = '';
-let maxWrong = 8;
+let maxWrong = 7;
 let mistakes = 0;
 let guessed = [];
 let wordStatus = null;
@@ -109,7 +109,7 @@ function checkIfGameWon() {
 }
 
 function calculateHangmanScore() {
-    score = 12 * (maxWrong - mistakes);
+    score = 14 * (maxWrong - mistakes);
 }
 
 function updateHangmanScoreList() {

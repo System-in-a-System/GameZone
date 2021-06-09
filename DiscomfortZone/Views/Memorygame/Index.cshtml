@@ -1,4 +1,5 @@
-﻿<div id="gameSpace">
+﻿<div class="mini-head"></div>
+<div id="gameSpace">
 
     <div id="board" tabindex="0"
          style="
@@ -38,7 +39,14 @@
 </div>
 
 <style>
-    
+    .masthead {
+        display: none;
+    }
+
+    .mini-head {
+        height: 100px;
+    }
+
     @@media screen and (max-width: 540px) {
     #board img {
         width: 22vw;

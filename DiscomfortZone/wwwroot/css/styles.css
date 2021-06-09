@@ -12033,3 +12033,13 @@ section#contact {
 #online-status {
     color: lightyellow
 }
+
+.modal-body img {
+    height: 200px;
+}
+
+.modal-body p {
+    margin-bottom: 0px;
+    padding: 0px;
+    font-size: 15px;
+}

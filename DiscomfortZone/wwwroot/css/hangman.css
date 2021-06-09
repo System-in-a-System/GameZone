@@ -1,5 +1,14 @@
-﻿.game-zone {
-    background-color: white;
+﻿.masthead {
+    display: none;
+}
+
+
+.mini-head {
+    height: 100px;
+}
+
+.game-zone {
+    background-color: black;
     border: 10px solid #333333;
     width: 50vw;
     height: fit-content();
@@ -12,8 +21,8 @@
     margin-right: 5%;
 }
 
-#hangmanArena {
-    
+#mistakes-counter {
+    color: white;
 }
 
 #hangmanPic {
@@ -26,8 +35,13 @@
 
 .task-line {
     font-size: 20px;
-    border: 0.2px solid #9c9c9c;
-    box-shadow: grey 3px 3px;
+    color: white;
+}
+
+#wordSpotlight {
+    color: white;
+    font-weight: bolder;
+    font-size: 20px;
 }
 
 #keyboard {
