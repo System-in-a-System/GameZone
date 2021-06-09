@@ -1,6 +1,15 @@
 ﻿var Xturn = true; //true means X turn
 var circles = [];
 
+// Retrieve the nickname from local storage or set it to default
+let nickname = window.localStorage.getItem('loggedin') || 'Unknown Hero';
+let score = "lost";
+
+// Load audio resources (winning sound) 
+let win = new Audio();
+win.src = "./assets/tictactoe/sounds/winning.mp3";
+
+
 /***************************************************************/
 function reset(A, B, C) {
     document.getElementById('circle' + A).style.color = "green";
@@ -66,10 +75,6 @@ function checkWinner() {
 
     let weHaveAWinner = false;
 
-    // load win audio file
-    let win = new Audio();
-    win.src = "./assets/tictactoe/sounds/winning.mp3";
-
     /***************************************************************/
     // check horizontal
     if (circles[1] == circles[2] && circles[2] == circles[3] && circles[1] != "") {
@@ -123,6 +128,8 @@ function checkWinner() {
         reset(1, 2, 3);
         reset(4, 5, 6);
         reset(7, 8, 9);
+        weHaveAWinner = true;
+        score = "tie"
     }
 
     return weHaveAWinner;
@@ -136,14 +143,22 @@ function insert(id) {
     if (insertValue.innerHTML == "") {
 
         insertValue.innerHTML = "X";
-        if (checkWinner()) return;
+        if (checkWinner()) {
+            score = score === "tie" ? "tie" : "win";
+            updateTicTacToeScoreList();
+            return;
+        }
+            
 
         let nextId = checkPotentialWinner();
 
         if (nextId != 0) {
             insertValue = document.getElementById('circle' + nextId);
             insertValue.innerHTML = "O";
-            if(checkWinner()) return;
+            if (checkWinner()) {
+                updateTicTacToeScoreList();
+                return;
+            }
         }
 
         else if (nextId == 0) {
@@ -158,7 +173,20 @@ function insert(id) {
             }
 
             insertValue.innerHTML = "O";
-            if (checkWinner()) return;
+            if (checkWinner()) {
+                updateTicTacToeScoreList();
+                return;
+            }
         }
     }
+}
+
+function updateTicTacToeScoreList() {
+    // Save current user score
+    const currentNicknameScorePair = { name: nickname, score: score };
+    const scoreStatistics = JSON.parse(window.localStorage.getItem('tictactoe-top-players')) || [];
+    scoreStatistics.push(currentNicknameScorePair);
+
+    // Reset updated top-players list to the the local storage
+    window.localStorage.setItem('tictactoe-top-players', JSON.stringify(scoreStatistics))
 }

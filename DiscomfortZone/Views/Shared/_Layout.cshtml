@@ -25,6 +25,14 @@
                 Menu
                 <i class="fas fa-bars ms-1"></i>
             </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                    <li class="nav-item" id="online-status"></li>
+                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Login" asp-action="Index" id="login-switcher">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Register" asp-action="Index">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Scoreboard" asp-action="Index">Scoreboard</a></li>
+                </ul>
+            </div>
         </div>
     </nav>
     <!-- Masthead-->
@@ -74,7 +82,8 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+    <script src="~/js/scripts.js"></script>
+    <script src="~/js/loginstatus.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

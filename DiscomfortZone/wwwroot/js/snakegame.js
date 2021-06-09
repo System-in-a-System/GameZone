@@ -1,5 +1,10 @@
-﻿const canvas = document.querySelector("#canvas");
+﻿// Refer structural elements
+const canvas = document.querySelector("#canvas");
 const context = canvas.getContext("2d");
+
+// Retrieve the nickname from local storage or set it to default
+let nickname = window.localStorage.getItem('loggedin') || 'Unknown Hero'
+let snakeScore = 0;
 
 // Create the unit
 const box = 24;
@@ -42,10 +47,6 @@ let food = {
 }
 
 
-// Initiate the score variable
-let score = 0;
-
-
 // Control the snake direction
 let snakeDirection;
 
@@ -58,7 +59,6 @@ function direction(event) {
 
     } else if (key == 87 && snakeDirection != "DOWN") {
         snakeDirection = "UP";
-
 
     } else if (key == 68 && snakeDirection != "LEFT") {
         snakeDirection = "RIGHT";
@@ -77,6 +77,46 @@ function selfCollision(head, snake) {
         }
     }
     return false;
+}
+
+function calculateSnakeScore() {
+    snakeScore = Math.floor((snakeScore * 10) / 4);
+}
+
+function updateSnakeScoreList() {
+    // Save current user score
+    const currentNicknameScorePair = { name: nickname, score: snakeScore };
+
+    // Check if current user score qualifies for the list of 10 top-players
+    const scoreStatistics = JSON.parse(window.localStorage.getItem('snake-top-players')) || [];
+
+    if (scoreStatistics.length >= 10) {
+        for (let i = 0; i < scoreStatistics.length; i++) {
+            if (score > scoreStatistics[i].score) {
+                scoreStatistics[i] = currentNicknameScorePair;
+                break;
+            }
+        }
+    } else {
+        scoreStatistics.push(currentNicknameScorePair);
+    }
+
+    // Sort the top-player list in descending order
+    scoreStatistics.sort((a, b) => {
+        const current = a.score
+        const next = b.score
+
+        let comparison = 0
+        if (current > next) {
+            comparison = -1
+        } else if (current < next) {
+            comparison = 1
+        }
+        return comparison
+    })
+
+    // Reset updated top-players list to the the local storage
+    window.localStorage.setItem('snake-top-players', JSON.stringify(scoreStatistics))
 }
 
 
@@ -107,7 +147,7 @@ function draw() {
 
     // if the snake eats the food
     if (snakeX == food.x && snakeY == food.y) {
-        score++;
+        snakeScore++;
 
         food = {
             x: Math.floor(Math.random() * 19 + 1) * box,
@@ -132,13 +172,15 @@ function draw() {
     if (gameOver) {
         clearInterval(game);
         deadSound.play();
+        calculateSnakeScore();
+        updateSnakeScoreList();
     }
 
     snake.unshift(newHead);
 
     context.fillStyle = "white";
     context.font = "45px Changa one";
-    context.fillText(`🍎 ${score}`, 2 * box, 2 * box);
+    context.fillText(`🍎 ${snakeScore}`, 2 * box, 2 * box);
 }
 
 // call draw function every 200 ms
