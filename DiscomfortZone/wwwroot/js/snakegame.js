@@ -1,89 +1,99 @@
 ﻿const canvas = document.querySelector("#canvas");
-const ctx = canvas.getContext("2d");
+const context = canvas.getContext("2d");
 
-// create the unit
+// Create the unit
 const box = 24;
 
-// create the snake
+// Create the snake (snake array)
 let snake = [];
 
-// placement snake head position 
+// Place snake head position at the canvas center
 snake[0] = {
-    x: 10 * box,
-    y: 10 * box
+    x: 12 * box,
+    y: 12 * box
 };
 
-//load audio
-let dead = new Audio();
-dead.src = "./assets/snakegame/sounds/dead.mp3";
 
-let eat = new Audio();
-eat.src = "./assets/snakegame/sounds/eat.mp3";
+// Load audio resources
+let deadSound = new Audio();
+deadSound.src = "./assets/snakegame/sounds/dead.mp3";
 
-// load images
-const foodImg = new Image();
-foodImg.src = "./assets/snakegame/field/food.png";
+let eatSound = new Audio();
+eatSound.src = "./assets/snakegame/sounds/eat.mp3";
 
-const ground = new Image();
-ground.src = "./assets/snakegame/field/ground.jpg";
+// Load image resources
+const snakeImage = new Image();
+snakeImage.src = "./assets/snakegame/field/snake.png";
 
-// create the food
+const snakeHeadImage = new Image();
+snakeHeadImage.src = "./assets/snakegame/field/snakehead.png";
+
+const foodImage = new Image();
+foodImage.src = "./assets/snakegame/field/food.png";
+
+const groundImage = new Image();
+groundImage.src = "./assets/snakegame/field/ground.jpg";
+
+
+// Create and locate the food
 let food = {
     x: Math.floor(Math.random() * 19 + 1) * box,
     y: Math.floor(Math.random() * 18 + 3) * box
 }
 
 
-// create the score var
+// Initiate the score variable
 let score = 0;
 
-//control the snake direction
+
+// Control the snake direction
 let snakeDirection;
 
 document.addEventListener("keydown", direction);
 
 function direction(event) {
     let key = event.keyCode;
-    if (key == 37 && snakeDirection != "RIGHT") {
+    if (key == 65 && snakeDirection != "RIGHT") {
         snakeDirection = "LEFT";
 
-    } else if (key == 38 && snakeDirection != "DOWN") {
+    } else if (key == 87 && snakeDirection != "DOWN") {
         snakeDirection = "UP";
 
 
-    } else if (key == 39 && snakeDirection != "LEFT") {
+    } else if (key == 68 && snakeDirection != "LEFT") {
         snakeDirection = "RIGHT";
 
-    } else if (key == 40 && snakeDirection != "UP") {
+    } else if (key == 83 && snakeDirection != "UP") {
         snakeDirection = "DOWN";
 
     }
 }
 
-// check collision function
-function collision(head, array) {
-    for (let i = 0; i < array.length; i++) {
-        if (head.x == array[i].x && head.y == array[i].y) {
+// Check if the snake colided upon itself
+function selfCollision(head, snake) {
+    for (let i = 0; i < snake.length; i++) {
+        if (head.x == snake[i].x && head.y == snake[i].y) {
             return true;
         }
     }
     return false;
 }
 
+
 // draw everything to the game
 function draw() {
 
-    ctx.drawImage(ground, 0, 0);
+    context.drawImage(groundImage, 0, 0);
 
     for (let i = 0; i < snake.length; i++) {
-        ctx.fillStyle = (i == 0) ? "lightblue" : "white";
-        ctx.fillRect(snake[i].x, snake[i].y, box, box);
-
-        ctx.strokeStyle = "blue";
-        ctx.strokeRect(snake[i].x, snake[i].y, box, box);
+        if (i == 0) {
+            context.drawImage(snakeHeadImage, snake[i].x, snake[i].y)
+        } else {
+            context.drawImage(snakeImage, snake[i].x, snake[i].y)
+        }
     }
 
-    ctx.drawImage(foodImg, food.x, food.y);
+    context.drawImage(foodImage, food.x, food.y);
 
     // old head position
     let snakeX = snake[0].x;
@@ -103,7 +113,8 @@ function draw() {
             x: Math.floor(Math.random() * 19 + 1) * box,
             y: Math.floor(Math.random() * 18 + 3) * box
         }
-        eat.play();
+
+        eatSound.play();
 
     } else {
         // remove the tail
@@ -117,19 +128,17 @@ function draw() {
     }
 
     // game over
-    gameOver = snakeX-- < box || snakeX > 20 * box || snakeY-- < 3 * box || snakeY > 21 * box || collision(newHead, snake);
+    gameOver = snakeX < 0 * box || snakeX > 23 * box || snakeY < 0 * box || snakeY > 23 * box || selfCollision(newHead, snake);
     if (gameOver) {
         clearInterval(game);
-        dead.play();
-        alert('game over... press *ctrl+R* to play again');
-
+        deadSound.play();
     }
 
     snake.unshift(newHead);
 
-    ctx.fillStyle = "white";
-    ctx.font = "45px Changa one";
-    ctx.fillText(score, 2 * box, 1.6 * box);
+    context.fillStyle = "white";
+    context.font = "45px Changa one";
+    context.fillText(`🍎 ${score}`, 2 * box, 2 * box);
 }
 
 // call draw function every 200 ms
