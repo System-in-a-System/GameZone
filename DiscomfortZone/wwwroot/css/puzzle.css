@@ -75,6 +75,12 @@ h3 {
     height: 95px;
 }
 
+#divSortable {
+    display:inline-block;
+    margin:auto;
+    width:95%;
+    vertical-align:top;
+}
 #collage button {
     border: 1px solid #cce;
     display: inline;
@@ -95,3 +101,83 @@ h3 {
     background-color: green;
     border: solid 1px #000;
 }
+
+
+/************************Responsive Web Design(media queries)**************************/
+
+@media screen and (max-width: 770px) {
+ 
+        #collage #playPanel {
+            max-width: 450px;
+            width: 67%;
+        }
+
+        #collage ul#sortable {
+            display: inline-block;
+            margin: 10px;
+            padding: 0px;
+            width: 93%;
+            box-sizing: content-box;
+        }
+
+    #sortable ul li {
+        background-size: 50% 50%;
+       
+        margin: 0;
+        padding: 0;
+        width: 35px;
+        height: 55px;
+    }
+    }
+
+    @media screen and (max-width: 440px) {
+
+        #collage #playPanel {
+            max-width: 750px;
+            width: 96.5%;
+        }
+
+        #collage ul#sortable {
+            display: inline-block;
+            margin: 0px;
+            padding: 0px;
+            width: 104%;
+            box-sizing: content-box;
+        }
+
+        #sortable ul li {
+            background-size: 50% 50%;
+            margin: 0;
+            padding: 0;
+            width: 45px;
+            height: 55px;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+     
+
+        #collage #playPanel {
+            padding-left: 0px;
+            padding-right: 0px;
+            margin-top: 10px;
+            max-width: 400px;
+            width: 100%;
+        }
+        #collage ul#sortable {
+            display: inline-block;
+            margin: 0px;
+            padding: 0px;
+            width: 104%;
+            box-sizing: content-box;
+        }
+
+        #sortable ul li {
+            background-size: 20% 25%;
+            width: 25px;
+            height: 45px;
+        }
+    }
+    
+
+

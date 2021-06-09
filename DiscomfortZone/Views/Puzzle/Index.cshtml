@@ -22,31 +22,33 @@
             <br />
             Rearrange the image parts in a way that it correctly forms the picture.
             <br />The no. of steps taken will be counted.
+            <br /> You have a Time limit (1000 secs / 100 sec)
         </div>
-        <div style="display:inline-block; margin:auto; width:95%; vertical-align:top;">
-            <ul id="sortable" class="sortable"></ul>
+ 
+        <div id="divSortable">
+        <ul id="sortable" class="sortable"></ul>
 
-            <div id="actualImageBox">
-                <div id="stepBox">
-                    <div>Steps:</div>
-                    <div id="stepCount" class="stepCount">0</div>
-                </div>
+        <div id="actualImageBox">
+            <div id="stepBox">
+                <div>Steps:</div>
+                <div id="stepCount" class="stepCount">0</div>
+            </div>
 
-                <div id="timeBox">
-                    Time Taken: <span id="timerPanel"></span> secs
-                </div>
+            <div id="timeBox">
+                Time Taken: <span id="timerPanel"></span> secs
+            </div>
 
-                <img id="actualImage" />
-                <div>Rearrange to create a picture like this.</div>
+            <img id="actualImage" />
+            <div>Rearrange to create a picture like this.</div>
 
-                <div>
+            <div>
 
-                    <button id="btnRule" type="button" class="btn" onclick="rulesButtons();">Rules</button>
-                    <button id="newPhoto" type="button" class="btn" onclick="restart();">next Photo</button>
+                <button id="btnRule" type="button" class="btn" onclick="rulesButtons();">Rules</button>
+                <button id="newPhoto" type="button" class="btn" onclick="restart();">next Photo</button>
 
-                </div>
             </div>
         </div>
+    </div>
     </div>
     <div id="win" style="display:none;">
         <div style="background-color: #fc9e9e; padding: 5px 10px 20px 10px; text-align: center; ">
@@ -68,3 +70,4 @@
         </div>
         <button type="button" onclick="window.location.reload(true);">Play Again</button>
     </div>
+</div>

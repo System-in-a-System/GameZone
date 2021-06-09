@@ -61,7 +61,16 @@ var imagePuzzle = {
         var now = new Date().getTime();
         var elapsedTime = parseInt((now - imagePuzzle.startTime) / 1000, 10);
         helper.doc('timerPanel').textContent = elapsedTime;
-        timerFunction = setTimeout(imagePuzzle.tick, 1000);
+
+       // if timing is over
+        if (elapsedTime && !isSorted) {
+            timerFunction = setTimeout(function () {
+                clearInterval(imagePuzzle.tick);
+                gameover.play();
+                helper.doc('actualImageBox').innerHTML = helper.doc('gameover').innerHTML;
+            }, 1000); // time in miliseconds before the game ends(60 second)
+        }
+
     },
     setImage: function (images, gridSize) {
         var percentage = 100 / (gridSize - 1 );
@@ -116,13 +125,12 @@ var imagePuzzle = {
                     }
                     if (isSorted(vals)) {
                         win.play();
-
                         helper.doc('actualImageBox').innerHTML = helper.doc('win').innerHTML;
                         helper.doc('stepCount').textContent = imagePuzzle.stepCount;
+                       
+                        this.startTime = new Date().getTime();
                       
                     }
-
-                
                 }
             };
             li.setAttribute('dragstart', 'true');
@@ -135,19 +143,10 @@ var imagePuzzle = {
 // IF is sorted
 isSorted = (arr) => arr.every((elem, index) => { return elem == index; });
 
-//Set a timer if timing is over
-
-Gameover = setTimeout(function () {      
-        clearInterval(imagePuzzle);   
-        gameover.play();
-        helper.doc('actualImageBox').innerHTML = helper.doc('gameover').innerHTML;
-    }, 40000);                     // time in miliseconds before the game ends(40 second)
-
-
 var helper = {
     doc: (id) => document.getElementById(id) || document.createElement("div"),
 
-    // Shuffle funtion
+ // Shuffle funtion
     shuffle: (id) => {
         var ul = document.getElementById(id);
         for (var i = ul.children.length; i >= 0; i--) {
