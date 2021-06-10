@@ -21,6 +21,12 @@ let gameover = new Audio();
 gameover.src = "./assets/puzzleSounds/gameover.mp3";
 
 
+// Retrieve the nickname from local storage or set it to default
+let nickname = window.localStorage.getItem('loggedin') || 'Unknown Hero';
+let puzzlesAreSorted = false;
+let score = 0;
+let stepCount = 0;
+
 //Create grid function
 var gridSize = 5;
 window.onload = function () {
@@ -42,14 +48,15 @@ function rulesButtons() {
 
 }
 
+
 // Declare timer variable
 var timerFunction = setTimeout(function () {
     clearInterval(imagePuzzle.tick);
-    gameover.play();
+    //gameover.play();
     helper.doc('actualImageBox').innerHTML = helper.doc('gameover').innerHTML;
-    helper.doc('stepCount').textContent = imagePuzzle.stepCount;
+    helper.doc('stepCount').textContent = stepCount;
     helper.doc('win').style.display = 'none';
-}, 60000);
+}, 120000);
 
 // Create The image puzzle
 var imagePuzzle = {
@@ -59,7 +66,6 @@ var imagePuzzle = {
         this.setImage(images, gridSize);
         helper.doc('playPanel').style.display = 'block';
         helper.shuffle('sortable');
-        this.stepCount = 0;
         this.startTime = new Date().getTime();
         this.tick();
     },
@@ -116,20 +122,24 @@ var imagePuzzle = {
 
                     let vals = Array.from(helper.doc('sortable').children).map(x => x.id);
                     var now = new Date().getTime();
-                    helper.doc('stepCount').textContent = ++imagePuzzle.stepCount;
+                    helper.doc('stepCount').textContent = ++stepCount;
                     document.querySelector('.timeCount').textContent = (parseInt((now - imagePuzzle.startTime) / 1000, 10));
                    
                     if (isSorted(vals)) {
-
+                        puzzlesAreSorted = true;
                         win.play();
+                        clearTimeout(timerFunction);
+                        helper.calculateScore();
+                        helper.updatePuzzleScorelist();
                         helper.doc('actualImageBox').innerHTML = helper.doc('win').innerHTML;
-                        helper.doc('stepCount').textContent = imagePuzzle.stepCount;
+                        helper.doc('stepCount').textContent = stepCount;
                         helper.doc('gameover').style.display = 'none';
                     }
                     if (!isSorted && elapsedTime) {
-                        gameover.play();
+                        //gameover.play();
+                        clearTimeout(timerFunction);
                         helper.doc('actualImageBox').innerHTML = helper.doc('gameover').innerHTML;
-                        helper.doc('stepCount').textContent = imagePuzzle.stepCount;
+                        helper.doc('stepCount').textContent = stepCount;
                         helper.doc('win').style.display = 'none';
                     }
 
@@ -155,7 +165,46 @@ var helper = {
         for (var i = ul.children.length; i >= 0; i--) {
             ul.appendChild(ul.children[Math.random() * i | 0]);
         }
+    },
+
+    calculateScore: () => {
+        score = 200 - (stepCount * 4);
+        clearTimeout(timerFunction);
+    },
+
+    updatePuzzleScorelist: () => {
+        // Save current user score
+        const currentNicknameScorePair = { name: nickname, score: score };
+
+        // Check if current user score qualifies for the list of 10 top-players
+        const scoreStatistics = JSON.parse(window.localStorage.getItem('puzzle-top-players')) || [];
+
+        if (scoreStatistics.length >= 10) {
+            for (let i = 0; i < scoreStatistics.length; i++) {
+                if (score > scoreStatistics[i].score) {
+                    scoreStatistics[i] = currentNicknameScorePair;
+                    break;
+                }
+            }
+        } else {
+            scoreStatistics.push(currentNicknameScorePair);
+        }
+
+        // Sort the top-player list in descending order
+        scoreStatistics.sort((a, b) => {
+            const current = a.score
+            const next = b.score
+
+            let comparison = 0
+            if (current > next) {
+                comparison = -1
+            } else if (current < next) {
+                comparison = 1
+            }
+            return comparison
+        })
+
+        // Reset updated top-players list to the the local storage
+        window.localStorage.setItem('puzzle-top-players', JSON.stringify(scoreStatistics))
     }
-
-
 }
