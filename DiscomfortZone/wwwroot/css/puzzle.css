@@ -1,4 +1,12 @@
-﻿﻿﻿body {
+﻿.masthead {
+    display: none;
+}
+
+.mini-head {
+    height: 100px;
+}﻿﻿
+
+body {
     font-family: 'Segoe UI', Calibri, Arial;
     margin: 0;
 }
