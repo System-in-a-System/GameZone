@@ -8,12 +8,12 @@ const tictactoeZone = document.querySelector("#tictactoeZone")
 
 
 // Retrieve top-player lists from the local storage
-const retrievedTopListHangman = JSON.parse(window.localStorage.getItem('hangman-top-players'))
-const retrievedTopListPuzzle = JSON.parse(window.localStorage.getItem('puzzle-top-players'))
-const retrievedTopListLightsout = JSON.parse(window.localStorage.getItem('lightsout-top-players'))
-const retrievedTopListMemorygame = JSON.parse(window.localStorage.getItem('memorygame-top-players'))
-const retrievedTopListSnake = JSON.parse(window.localStorage.getItem('snake-top-players'))
-const retrievedTopListTictactoe = JSON.parse(window.localStorage.getItem('tictactoe-top-players'))
+const retrievedTopListHangman = JSON.parse(window.localStorage.getItem('hangman-top-players')) || []
+const retrievedTopListPuzzle = JSON.parse(window.localStorage.getItem('puzzle-top-players')) || []
+const retrievedTopListLightsout = JSON.parse(window.localStorage.getItem('lightsout-top-players')) || []
+const retrievedTopListMemorygame = JSON.parse(window.localStorage.getItem('memorygame-top-players')) || []
+const retrievedTopListSnake = JSON.parse(window.localStorage.getItem('snake-top-players')) || []
+const retrievedTopListTictactoe = JSON.parse(window.localStorage.getItem('tictactoe-top-players')) || []
 
 
 const scoreInfo = [{ game: hangmanZone, scorelist: retrievedTopListHangman },
@@ -52,14 +52,27 @@ function displayScoreList() {
 
 
     // Compile a table
+    puzzleZone.appendChild(scoreTableTemplate.content.cloneNode(true))
+    const scoreTablePuzzle = puzzleZone.querySelector('#score-table')
+    scoreTablePuzzle.id = 'lightsout-score-table'
+
+    // Load top-players into a score-table
+    for (let i = 0; i < retrievedTopListPuzzle.length; i++) {
+        scoreTablePuzzle.innerHTML += '<tr><td>' + retrievedTopListPuzzle[i].name + '</td><td>' + retrievedTopListPuzzle[i].score + '</td></tr>'
+    }
+
+
+
+    // Compile a table
     lightsoutZone.appendChild(scoreTableTemplate.content.cloneNode(true))
     const scoreTableLightsout = lightsoutZone.querySelector('#score-table')
-    scoreTableLightsout.id = 'lightsout-score-table'
+    scoreTableLightsout.id = 'puzlle-score-table'
 
     // Load top-players into a score-table
     for (let i = 0; i < retrievedTopListLightsout.length; i++) {
         scoreTableLightsout.innerHTML += '<tr><td>' + retrievedTopListLightsout[i].name + '</td><td>' + retrievedTopListLightsout[i].score + '</td></tr>'
     }
+
 
 
     // Compile a table
