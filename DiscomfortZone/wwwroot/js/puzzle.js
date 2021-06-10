@@ -43,7 +43,13 @@ function rulesButtons() {
 }
 
 // Declare timer variable
-var timerFunction;
+var timerFunction = setTimeout(function () {
+    clearInterval(imagePuzzle.tick);
+    gameover.play();
+    helper.doc('actualImageBox').innerHTML = helper.doc('gameover').innerHTML;
+    helper.doc('stepCount').textContent = imagePuzzle.stepCount;
+    helper.doc('win').style.display = 'none';
+}, 60000);
 
 // Create The image puzzle
 var imagePuzzle = {
@@ -61,15 +67,7 @@ var imagePuzzle = {
         var now = new Date().getTime();
         var elapsedTime = parseInt((now - imagePuzzle.startTime) / 1000, 10);
         helper.doc('timerPanel').textContent = elapsedTime;
-
-       // if timing is over
-        if (elapsedTime && !isSorted) {
-            timerFunction = setTimeout(function () {
-                clearInterval(imagePuzzle.tick);
-                gameover.play();
-                helper.doc('actualImageBox').innerHTML = helper.doc('gameover').innerHTML;
-            }, 1000); // time in miliseconds before the game ends(60 second)
-        }
+        timerFunction = setTimeout(imagePuzzle.tick, 1000);
 
     },
     setImage: function (images, gridSize) {
@@ -120,17 +118,21 @@ var imagePuzzle = {
                     var now = new Date().getTime();
                     helper.doc('stepCount').textContent = ++imagePuzzle.stepCount;
                     document.querySelector('.timeCount').textContent = (parseInt((now - imagePuzzle.startTime) / 1000, 10));
-                    if (imagePuzzle.gameover) {
-
-                    }
+                   
                     if (isSorted(vals)) {
+
                         win.play();
                         helper.doc('actualImageBox').innerHTML = helper.doc('win').innerHTML;
                         helper.doc('stepCount').textContent = imagePuzzle.stepCount;
-                       
-                        this.startTime = new Date().getTime();
-                      
+                        helper.doc('gameover').style.display = 'none';
                     }
+                    if (!isSorted && elapsedTime) {
+                        gameover.play();
+                        helper.doc('actualImageBox').innerHTML = helper.doc('gameover').innerHTML;
+                        helper.doc('stepCount').textContent = imagePuzzle.stepCount;
+                        helper.doc('win').style.display = 'none';
+                    }
+
                 }
             };
             li.setAttribute('dragstart', 'true');
@@ -139,6 +141,7 @@ var imagePuzzle = {
         helper.shuffle('sortable');
     }
 };
+
 
 // IF is sorted
 isSorted = (arr) => arr.every((elem, index) => { return elem == index; });
@@ -153,5 +156,6 @@ var helper = {
             ul.appendChild(ul.children[Math.random() * i | 0]);
         }
     }
+
 
 }
